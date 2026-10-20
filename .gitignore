@@ -1,0 +1,18 @@
+# Root gitignore
+.env
+.env.*
+!.env.example
+
+# Composer & Node
+vendor/
+node_modules/
+backend/vendor/
+frontend/node_modules/
+
+# Logs & caches
+*.log
+.phpunit.result.cache
+
+# OS files
+.DS_Store
+Thumbs.db
