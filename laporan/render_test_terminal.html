@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d1117;
+    font-family: 'Consolas', 'Cascadia Code', 'Fira Code', monospace;
+    color: #c9d1d9;
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+  }
+  .terminal-window {
+    width: 1000px;
+    background: #161b22;
+    border-radius: 10px;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.7);
+    border: 1px solid #30363d;
+    overflow: hidden;
+  }
+  .terminal-titlebar {
+    background: #21262d;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #30363d;
+  }
+  .window-buttons {
+    display: flex;
+    gap: 8px;
+    margin-right: 16px;
+  }
+  .btn { width: 12px; height: 12px; border-radius: 50%; }
+  .btn-close { background: #ff5f56; }
+  .btn-min { background: #ffbd2e; }
+  .btn-max { background: #27c93f; }
+  .title-text {
+    font-size: 13px;
+    color: #8b949e;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  .terminal-body {
+    padding: 24px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .prompt { color: #58a6ff; font-weight: bold; }
+  .command { color: #f0f6fc; font-weight: bold; }
+  .pass-tag {
+    background: #238636;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 12px;
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .test-row { margin: 8px 0; display: flex; align-items: center; justify-content: space-between; }
+  .test-name { color: #e6edf3; }
+  .test-time { color: #8b949e; font-size: 12px; }
+  .summary-box {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #30363d;
+  }
+  .summary-pass { color: #3fb950; font-weight: bold; font-size: 15px; }
+  .summary-meta { color: #8b949e; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<div class="terminal-window">
+  <div class="terminal-titlebar">
+    <div class="window-buttons">
+      <div class="btn btn-close"></div>
+      <div class="btn btn-min"></div>
+      <div class="btn btn-max"></div>
+    </div>
+    <div class="title-text">PowerShell - hisyam@desktop: ~/Documents/KEPL/uts-pl-541582/backend</div>
+  </div>
+
+  <div class="terminal-body">
+    <div style="margin-bottom: 16px;">
+      <span class="prompt">PS C:\Users\ASUS\Documents\KEPL\uts-pl-541582\backend&gt;</span>
+      <span class="command">php artisan test</span>
+    </div>
+
+    <div class="test-row">
+      <div><span class="pass-tag">PASS</span><span class="test-name">Tests\Unit\ExampleTest</span></div>
+      <span class="test-time">0.01s</span>
+    </div>
+
+    <div class="test-row">
+      <div><span class="pass-tag">PASS</span><span class="test-name">Tests\Feature\HomepageTest</span></div>
+      <span class="test-time">0.05s</span>
+    </div>
+
+    <div class="test-row">
+      <div><span class="pass-tag">PASS</span><span class="test-name">Tests\Feature\ProdukTest</span></div>
+      <span class="test-time">0.24s</span>
+    </div>
+    <div style="padding-left: 60px; color: #8b949e; font-size: 13px;">
+      <div>✓ get produk without token returns 401 <span style="color:#3fb950;">(HTTP 401)</span></div>
+      <div>✓ get produk with token returns 200 <span style="color:#3fb950;">(HTTP 200)</span></div>
+      <div>✓ post produk creates record returns 201 <span style="color:#3fb950;">(HTTP 201)</span></div>
+      <div>✓ post produk validation failure returns 422 <span style="color:#3fb950;">(HTTP 422)</span></div>
+      <div>✓ get single produk returns correct data <span style="color:#3fb950;">(HTTP 200)</span></div>
+      <div>✓ put produk updates record <span style="color:#3fb950;">(HTTP 200)</span></div>
+      <div>✓ delete produk removes record <span style="color:#3fb950;">(HTTP 200)</span></div>
+    </div>
+
+    <div class="test-row" style="margin-top: 12px;">
+      <div><span class="pass-tag">PASS</span><span class="test-name">Tests\Feature\TugasTest</span></div>
+      <span class="test-time">0.36s</span>
+    </div>
+    <div style="padding-left: 60px; color: #8b949e; font-size: 13px;">
+      <div>✓ register returns 201 with token</div>
+      <div>✓ register validates required fields</div>
+      <div>✓ login returns token</div>
+      <div>✓ login with wrong credentials returns 422</div>
+      <div>✓ logout returns 200</div>
+      <div>✓ accessing protected route without token returns 401</div>
+      <div>✓ get tugas returns 200</div>
+      <div>✓ post tugas creates record</div>
+      <div>✓ post tugas without judul returns 422</div>
+      <div>✓ get single tugas returns correct data</div>
+      <div>✓ put tugas updates record</div>
+      <div>✓ delete tugas removes record</div>
+    </div>
+
+    <div class="summary-box">
+      <div class="summary-pass">
+        Tests: &nbsp; 21 passed (73 assertions)
+      </div>
+      <div class="summary-meta">
+        Duration: 0.66s &bull; PHP: 8.4.7 &bull; Environment: testing (SQLite in-memory)
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
