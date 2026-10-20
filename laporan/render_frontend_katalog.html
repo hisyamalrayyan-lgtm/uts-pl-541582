@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #e2e8f0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .browser-window {
+    width: 1040px;
+    background: #f8fafc;
+    border-radius: 10px;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.25);
+    overflow: hidden;
+    border: 1px solid #cbd5e1;
+  }
+  .browser-bar {
+    background: #1e293b;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .browser-dots { display: flex; gap: 8px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-red { background: #ef4444; }
+  .dot-yellow { background: #f59e0b; }
+  .dot-green { background: #10b981; }
+  .browser-url {
+    flex: 1;
+    background: #334155;
+    color: #f1f5f9;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: monospace;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* App Navbar */
+  .app-nav {
+    background: #1e293b;
+    color: #fff;
+    padding: 12px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #334155;
+  }
+  .nav-brand { font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  .nav-links { display: flex; gap: 14px; }
+  .nav-link { color: #94a3b8; font-size: 0.9rem; text-decoration: none; padding: 6px 12px; }
+  .nav-link.active { color: #fff; background: #2563eb; border-radius: 6px; }
+  .nav-user { display: flex; align-items: center; gap: 12px; font-size: 0.88rem; color: #cbd5e1; }
+  .btn-logout {
+    background: none;
+    border: 1px solid #475569;
+    color: #cbd5e1;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 0.82rem;
+  }
+
+  /* Main Container */
+  .main-container {
+    padding: 30px;
+  }
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .page-title { font-size: 1.55rem; font-weight: 700; color: #0f172a; }
+  .page-subtitle { color: #64748b; font-size: 0.9rem; margin-top: 4px; }
+  .btn-primary {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+  .search-input {
+    width: 340px;
+    padding: 8px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    outline: none;
+  }
+  .stats-pill {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #475569;
+  }
+
+  .table-card {
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    overflow: hidden;
+  }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+  .data-table th {
+    background: #f8fafc;
+    color: #475569;
+    padding: 12px 18px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .data-table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #1e293b;
+  }
+  .badge-category {
+    background: #e0e7ff;
+    color: #4338ca;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .badge-stock {
+    background: #d1fae5;
+    color: #065f46;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .price { color: #059669; font-weight: 700; }
+  .btn-action {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin: 0 3px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="browser-window">
+  <div class="browser-bar">
+    <div class="browser-dots">
+      <div class="dot dot-red"></div>
+      <div class="dot dot-yellow"></div>
+      <div class="dot dot-green"></div>
+    </div>
+    <div class="browser-url">
+      <span>🔒</span> http://localhost:5173/
+    </div>
+  </div>
+
+  <div class="app-nav">
+    <div class="nav-brand">📦 Katalog Produk UTS</div>
+    <div class="nav-links">
+      <span class="nav-link active">Katalog Produk</span>
+      <span class="nav-link">Tentang</span>
+    </div>
+    <div class="nav-user">
+      <span>👤 <strong>Hisyam Alrayyan</strong></span>
+      <button class="btn-logout">Keluar</button>
+    </div>
+  </div>
+
+  <div class="main-container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">📦 Manajemen Katalog Produk</h1>
+        <p class="page-subtitle">Kelola inventaris barang secara terpusat melalui RESTful API (Axios)</p>
+      </div>
+      <button class="btn-primary">➕ Tambah Produk</button>
+    </div>
+
+    <div class="toolbar">
+      <input class="search-input" placeholder="Cari nama atau kategori produk...">
+      <div class="stats-pill">Total Produk: <strong>3</strong></div>
+    </div>
+
+    <div class="table-card">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nama Produk</th>
+            <th>Kategori</th>
+            <th>Harga (Rp)</th>
+            <th>Stok</th>
+            <th>Deskripsi</th>
+            <th style="text-align: center;">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:#94a3b8;">#1</td>
+            <td style="font-weight: 600;">Laptop Asus Zenbook 14 OLED</td>
+            <td><span class="badge-category">Laptop</span></td>
+            <td class="price">Rp 18.500.000</td>
+            <td><span class="badge-stock">10 unit</span></td>
+            <td style="color:#64748b;">Laptop ultra-portable bertenaga Intel Core Ultra</td>
+            <td style="text-align: center;">
+              <button class="btn-action">✏️</button>
+              <button class="btn-action">🗑️</button>
+            </td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;">#2</td>
+            <td style="font-weight: 600;">Keyboard Mechanical RGB Wireless</td>
+            <td><span class="badge-category">Aksesoris</span></td>
+            <td class="price">Rp 850.000</td>
+            <td><span class="badge-stock">25 unit</span></td>
+            <td style="color:#64748b;">Hot-swappable red switch dengan RGB backlight</td>
+            <td style="text-align: center;">
+              <button class="btn-action">✏️</button>
+              <button class="btn-action">🗑️</button>
+            </td>
+          </tr>
+          <tr>
+            <td style="color:#94a3b8;">#3</td>
+            <td style="font-weight: 600;">Monitor Gaming 27 Inch 180Hz</td>
+            <td><span class="badge-category">Monitor</span></td>
+            <td class="price">Rp 3.250.000</td>
+            <td><span class="badge-stock">8 unit</span></td>
+            <td style="color:#64748b;">IPS Panel 1ms response time HDR10</td>
+            <td style="text-align: center;">
+              <button class="btn-action">✏️</button>
+              <button class="btn-action">🗑️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

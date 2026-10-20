@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d1117;
+    font-family: 'Consolas', 'Cascadia Code', monospace;
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+  }
+  .code-window {
+    width: 1020px;
+    background: #161b22;
+    border-radius: 10px;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.7);
+    border: 1px solid #30363d;
+    overflow: hidden;
+  }
+  .code-titlebar {
+    background: #21262d;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #30363d;
+  }
+  .dots { display: flex; gap: 8px; margin-right: 16px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-red { background: #ff5f56; }
+  .dot-yellow { background: #ffbd2e; }
+  .dot-green { background: #27c93f; }
+  .title-text { font-size: 13px; color: #8b949e; }
+
+  .code-body { padding: 24px; font-size: 13.5px; line-height: 1.6; }
+  .file-label {
+    background: #21262d;
+    color: #58a6ff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  .box {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+  .kw { color: #ff7b72; font-weight: bold; }
+  .str { color: #a5d6ff; }
+  .var { color: #79c0ff; }
+  .comment { color: #8b949e; font-style: italic; }
+</style>
+</head>
+<body>
+
+<div class="code-window">
+  <div class="code-titlebar">
+    <div class="dots">
+      <div class="dot dot-red"></div>
+      <div class="dot dot-yellow"></div>
+      <div class="dot dot-green"></div>
+    </div>
+    <div class="title-text">VS Code - Konfigurasi Variabel Lingkungan API (Soal 2.c)</div>
+  </div>
+
+  <div class="code-body">
+    <div class="file-label">📄 frontend/.env &amp; frontend/.env.example</div>
+    <div class="box">
+      <span class="comment"># Alamat Backend Laravel diatur lewat Environment Variable:</span><br>
+      <span class="var">VITE_API_URL</span>=<span class="str">http://localhost:8000</span>
+    </div>
+
+    <div class="file-label">📄 frontend/src/api/axios.js</div>
+    <div class="box">
+      <span class="kw">import</span> axios <span class="kw">from</span> <span class="str">'axios'</span><br><br>
+      <span class="comment">// 1. Alamat API TIDAK ditulis mati (hardcoded), melainkan membaca konfigurasi env:</span><br>
+      <span class="kw">const</span> <span class="var">apiUrl</span> = <span class="var">import.meta.env.VITE_API_URL</span> || <span class="str">'http://localhost:8000'</span><br><br>
+      <span class="kw">const</span> <span class="var">apiClient</span> = axios.<span class="var">create</span>({<br>
+      &nbsp;&nbsp;<span class="var">baseURL</span>: <span class="var">apiUrl</span>,<br>
+      &nbsp;&nbsp;<span class="var">headers</span>: { <span class="str">'Accept'</span>: <span class="str">'application/json'</span>, <span class="str">'Content-Type'</span>: <span class="str">'application/json'</span> }<br>
+      })<br><br>
+      <span class="comment">// 2. Interceptor menyisipkan token Sanctum ke Authorization Bearer di setiap request:</span><br>
+      apiClient.<span class="var">interceptors</span>.<span class="var">request</span>.<span class="var">use</span>((<span class="var">config</span>) =&gt; {<br>
+      &nbsp;&nbsp;<span class="kw">const</span> <span class="var">token</span> = localStorage.<span class="var">getItem</span>(<span class="str">'token'</span>)<br>
+      &nbsp;&nbsp;<span class="kw">if</span> (<span class="var">token</span>) {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="var">config.headers.Authorization</span> = <span class="str">`Bearer ${token}`</span><br>
+      &nbsp;&nbsp;}<br>
+      &nbsp;&nbsp;<span class="kw">return</span> <span class="var">config</span><br>
+      })<br><br>
+      <span class="kw">export default</span> <span class="var">apiClient</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
