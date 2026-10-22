@@ -1,0 +1,93 @@
+services:
+  # ================================================================
+  # SERVICE 1: Basis Data (MySQL / MariaDB) — Soal 6.a & 6.b
+  # ================================================================
+  db:
+    image: mariadb:11.4
+    container_name: uts-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootsecret}
+      MYSQL_DATABASE: ${DB_DATABASE:-uts_db}
+      MYSQL_USER: ${DB_USERNAME:-uts_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-uts_password}
+    volumes:
+      # Data disimpan di named volume agar persisten (Soal 6.d)
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - uts-network
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  # ================================================================
+  # SERVICE 2: Backend Laravel (FrankenPHP) — Soal 6.a, 6.b & Soal 7
+  # Menggunakan FrankenPHP Caddy menggantikan php artisan serve / PHP-FPM
+  # ================================================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.frankenphp
+    container_name: uts-backend
+    restart: unless-stopped
+    environment:
+      APP_NAME: "UTS-KEPL-Produk"
+      APP_ENV: ${APP_ENV:-production}
+      APP_KEY: ${APP_KEY:-base64:4D5jC3Zk9w0LgK8vY1sH7mE4rQ9uP2aO5iN7tX6wV8=}
+      APP_DEBUG: ${APP_DEBUG:-false}
+      APP_URL: http://localhost:8000
+      DB_CONNECTION: mysql
+      # Terhubung ke service db via nama service Docker, bukan IP laptop (Soal 6.b)
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE:-uts_db}
+      DB_USERNAME: ${DB_USERNAME:-uts_user}
+      DB_PASSWORD: ${DB_PASSWORD:-uts_password}
+      SERVER_NAME: ":8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - backend_storage:/app/storage
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - uts-network
+
+  # ================================================================
+  # SERVICE 3: Frontend Vue 3 + Nginx — Soal 6.a & 6.b
+  # ================================================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: uts-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - uts-network
+
+# ================================================================
+# VOLUMES: Named volume untuk persistensi data (Soal 6.d)
+# ================================================================
+volumes:
+  db_data:
+    name: uts_db_data
+  backend_storage:
+    name: uts_backend_storage
+
+# ================================================================
+# NETWORKS: Bridge network untuk komunikasi antar-service
+# ================================================================
+networks:
+  uts-network:
+    name: uts-network
+    driver: bridge
