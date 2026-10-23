@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 // Public auth routes
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 // Protected routes (require Sanctum token)
 Route::middleware('auth:sanctum')->group(function () {
@@ -17,6 +17,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Produk CRUD (UTS Resource - Baru & Berbeda dari tugas sebelumnya)
     Route::apiResource('produk', ProdukController::class);
+    Route::apiResource('produks', ProdukController::class);
 
     // Tugas CRUD (Backward compatibility)
     Route::get('/tugas', [TugasController::class, 'index']);
