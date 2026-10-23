@@ -12,6 +12,9 @@ frontend/node_modules/
 # Logs & caches
 *.log
 .phpunit.result.cache
+*.aux
+*.out
+*.toc
 
 # OS files
 .DS_Store

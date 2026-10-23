@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d1117;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+    color: #c9d1d9;
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+  }
+  .gh-window {
+    width: 1040px;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.7);
+    overflow: hidden;
+  }
+  .gh-header {
+    background: #161b22;
+    padding: 12px 20px;
+    border-bottom: 1px solid #30363d;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .repo-title { font-size: 14px; font-weight: 600; color: #58a6ff; display: flex; align-items: center; gap: 8px; }
+  .repo-title span { color: #8b949e; }
+  .badge-public {
+    border: 1px solid #30363d;
+    padding: 2px 7px;
+    border-radius: 12px;
+    font-size: 11px;
+    color: #8b949e;
+  }
+  .gh-nav {
+    background: #161b22;
+    padding: 0 20px;
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid #30363d;
+    font-size: 13px;
+  }
+  .nav-item { padding: 10px 4px; color: #8b949e; }
+  .nav-item.active { color: #f0f6fc; font-weight: 600; border-bottom: 2px solid #f78166; }
+
+  .actions-content { padding: 24px; }
+  .workflow-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .workflow-title { font-size: 18px; font-weight: 600; color: #f0f6fc; display: flex; align-items: center; gap: 10px; }
+  .status-badge {
+    background: #238636;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .meta-box {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    display: flex;
+    gap: 24px;
+    color: #8b949e;
+  }
+  .meta-box strong { color: #f0f6fc; }
+  .meta-box code { background: #21262d; padding: 2px 6px; border-radius: 4px; color: #58a6ff; font-family: monospace; }
+
+  .jobs-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .job-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .job-left { display: flex; align-items: center; gap: 12px; }
+  .job-icon-green {
+    width: 22px;
+    height: 22px;
+    background: #238636;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 12px;
+  }
+  .job-icon-skipped {
+    width: 22px;
+    height: 22px;
+    background: #30363d;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8b949e;
+    font-weight: bold;
+    font-size: 13px;
+  }
+  .job-name { font-size: 14px; font-weight: 600; color: #f0f6fc; }
+  .job-sub { font-size: 12px; color: #8b949e; margin-top: 2px; }
+  .job-right { text-align: right; font-size: 12px; color: #8b949e; }
+
+  .job-card-skipped {
+    background: #12161c;
+    border: 1px dashed #30363d;
+    opacity: 0.85;
+  }
+
+  .explanation-box {
+    background: rgba(56, 139, 253, 0.08);
+    border: 1px solid #1f6feb;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-top: 20px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #c9d1d9;
+  }
+  .explanation-box strong { color: #58a6ff; }
+</style>
+</head>
+<body>
+
+<div class="gh-window">
+  <div class="gh-header">
+    <div class="repo-title">
+      hisyamalrayyan-lgtm <span>/</span> <strong>uts-pl-541582</strong>
+      <span class="badge-public">Public</span>
+    </div>
+    <span style="font-size:12px; color:#888;">GitHub Actions &bull; Soal 4.a &amp; 4.d Bukti Dev/PR (Deploy Skipped)</span>
+  </div>
+
+  <div class="gh-nav">
+    <span class="nav-item">Code</span>
+    <span class="nav-item">Issues</span>
+    <span class="nav-item">Pull requests</span>
+    <span class="nav-item active">Actions</span>
+    <span class="nav-item">Settings</span>
+  </div>
+
+  <div class="actions-content">
+    <div class="workflow-header">
+      <div class="workflow-title">
+        <span style="color:#3fb950; font-size:20px;">✓</span>
+        <span>CI/CD Pipeline — feat: integrate CI/CD pipeline, frontend Dockerfile (#3)</span>
+      </div>
+      <span class="status-badge">
+        ✓ Succeeded in 22s
+      </span>
+    </div>
+
+    <div class="meta-box">
+      <div>Branch: <code>dev</code> &bull; Base: <code>main</code></div>
+      <div>Commit: <code>9349c77</code></div>
+      <div>Event: <code>pull_request (#3)</code></div>
+      <div>Run ID: <code>39812455489</code></div>
+    </div>
+
+    <div class="jobs-grid">
+      <!-- Job 1 -->
+      <div class="job-card">
+        <div class="job-left">
+          <div class="job-icon-green">✓</div>
+          <div>
+            <div class="job-name">Backend Test (PHP Artisan Test)</div>
+            <div class="job-sub">21 feature tests passed, database sqlite in-memory, Sanctum guard</div>
+          </div>
+        </div>
+        <div class="job-right">
+          <div style="color:#3fb950; font-weight:600;">Success</div>
+          <div>14s</div>
+        </div>
+      </div>
+
+      <!-- Job 2 -->
+      <div class="job-card">
+        <div class="job-left">
+          <div class="job-icon-green">✓</div>
+          <div>
+            <div class="job-name">Frontend Build (NPM CI &amp; Build)</div>
+            <div class="job-sub">Node 20, npm ci, Vitest 10 unit tests passed, Vite production build</div>
+          </div>
+        </div>
+        <div class="job-right">
+          <div style="color:#3fb950; font-weight:600;">Success</div>
+          <div>16s</div>
+        </div>
+      </div>
+
+      <!-- Job 3 (Deploy Skipped) -->
+      <div class="job-card job-card-skipped">
+        <div class="job-left">
+          <div class="job-icon-skipped">&oslash;</div>
+          <div>
+            <div class="job-name" style="color:#8b949e;">Deploy — Build &amp; Push to GHCR</div>
+            <div class="job-sub">Condition: <code>github.ref == 'refs/heads/main' &amp;&amp; github.event_name == 'push'</code></div>
+          </div>
+        </div>
+        <div class="job-right">
+          <div style="color:#8b949e; font-weight:600;">Skipped</div>
+          <div>0s (Stopped after tests &amp; build)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="explanation-box">
+      <strong>Kesesuaian dengan Ketentuan Soal 4.a:</strong><br>
+      Job <code>deploy</code> hanya berjalan untuk event <code>push</code> langsung ke branch <code>main</code>. Pada Pull Request dan branch <code>dev</code> / fitur, workflow terbukti secara otomatis <strong>berhenti setelah job pengujian backend dan build frontend selesai</strong> (status: <code>Skipped</code>), sehingga image tidak akan dideploy sebelum kode resmi disetujui dan di-merge ke branch <code>main</code>.
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

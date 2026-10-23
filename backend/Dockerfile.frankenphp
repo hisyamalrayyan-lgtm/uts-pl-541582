@@ -1,0 +1,56 @@
+# syntax=docker/dockerfile:1
+
+# ================================================================
+# STAGE 1 — builder
+# Kompilasi dependensi PHP menggunakan Composer
+# ================================================================
+FROM composer:2.8 AS vendor
+
+WORKDIR /app
+
+COPY composer.json composer.lock ./
+RUN composer install \
+    --no-dev \
+    --no-scripts \
+    --no-autoloader \
+    --no-interaction \
+    --prefer-dist
+
+COPY . .
+RUN composer dump-autoload --optimize --no-dev
+
+# ================================================================
+# STAGE 2 — runtime FrankenPHP (Soal 7 Bonus +10 Pts)
+# Menggunakan explicit version tag: 1.4.4-php8.4-alpine (bukan latest)
+# Menggantikan php artisan serve / PHP-FPM+Nginx dengan FrankenPHP Caddy
+# ================================================================
+FROM dunglas/frankenphp:1.4.4-php8.4-alpine AS runtime
+
+# Install ekstensi yang dibutuhkan Laravel (pdo_mysql, pcntl, bcmath, zip)
+RUN install-php-extensions \
+    pdo_mysql \
+    pcntl \
+    bcmath \
+    zip \
+    intl \
+    opcache
+
+WORKDIR /app
+
+# Salin source code dan vendor dari builder
+COPY --from=vendor /app .
+
+# Salin script entrypoint untuk migrasi otomatis saat startup
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Set permission storage dan bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
+# Port default FrankenPHP di dalam container
+ENV SERVER_NAME=":8000"
+EXPOSE 8000
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]
